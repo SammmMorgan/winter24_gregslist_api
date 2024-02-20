@@ -9,6 +9,7 @@ export class HousesController extends BaseController {
             .post('', this.createHouse)
             .get('/:houseId', this.getHouseById)
             .put('/:houseId', this.editHouse)
+            .delete('/:houseId', this.obliterateHouse)
 
     }
 
@@ -72,9 +73,22 @@ export class HousesController extends BaseController {
             response.send(changedHouse)
         } catch (error) {
             next(error)
-
         }
+    }
 
+    /**
+    * @param {import("express").Request} request
+    * @param {import("express").Response} response
+    * @param {import("express").NextFunction} next
+    */
+    async obliterateHouse(request, response, next) {
+        try {
+            const house = request.params.houseId
+            const houseToBeGoned = await houseService.obliterateHouse(house)
+            response.send('it is gone!')
+        } catch (error) {
+            next(error)
+        }
 
     }
 }

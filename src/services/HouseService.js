@@ -2,6 +2,16 @@ import { dbContext } from "../db/DbContext.js"
 import { BadRequest } from "../utils/Errors.js"
 
 class HouseService {
+    async obliterateHouse(house) {
+        const houseToBeGoned = await this.getHouseById(house)
+
+        await houseToBeGoned.deleteOne()
+
+        return
+
+    }
+
+
     async editHouse(house, houseData) {
         const houseUpdating = await this.getHouseById(house)
 
