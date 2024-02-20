@@ -7,6 +7,7 @@ export class HousesController extends BaseController {
         this.router
             .get('', this.getHouses)
             .post('', this.createHouse)
+            .get('/:houseId', this.getHouseById)
 
     }
 
@@ -40,4 +41,20 @@ export class HousesController extends BaseController {
             next(error)
         }
     }
+
+    /**
+    * @param {import("express").Request} request
+    * @param {import("express").Response} response
+    * @param {import("express").NextFunction} next
+    */
+    async getHouseById(request, response, next) {
+        try {
+            const houseId = request.params.houseId
+            const house = await houseService.getHouseById(houseId)
+            response.send(house)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
+
