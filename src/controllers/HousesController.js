@@ -8,6 +8,7 @@ export class HousesController extends BaseController {
             .get('', this.getHouses)
             .post('', this.createHouse)
             .get('/:houseId', this.getHouseById)
+            .put('/:houseId', this.editHouse)
 
     }
 
@@ -55,6 +56,26 @@ export class HousesController extends BaseController {
         } catch (error) {
             next(error)
         }
+    }
+
+    /**
+    * @param {import("express").Request} request
+    * @param {import("express").Response} response
+    * @param {import("express").NextFunction} next
+    */
+
+    async editHouse(request, response, next) {
+        try {
+            const house = request.params.houseId
+            const houseData = request.body
+            const changedHouse = await houseService.editHouse(house, houseData)
+            response.send(changedHouse)
+        } catch (error) {
+            next(error)
+
+        }
+
+
     }
 }
 
